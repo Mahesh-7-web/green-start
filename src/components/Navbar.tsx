@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Leaf, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Leaf, Menu, X, LogOut, User } from "lucide-react";
+import { useState, useEffect } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -14,9 +14,29 @@ const navLinks = [
   { href: "/compare", label: "Compare" },
 ];
 
+function getLoggedInUser(): { name: string; email: string } | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem("greenstart_user");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+
+  useEffect(() => {
+    setUser(getLoggedInUser());
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("greenstart_user");
+    window.location.reload();
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-green-100 bg-white/90 backdrop-blur-md">
@@ -45,15 +65,39 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
-          <Link
-            href="/pricing"
-            className={buttonVariants({
-              className: "bg-amber-600 text-white hover:bg-amber-700",
-            })}
-          >
-            View Plans
-          </Link>
+        <div className="hidden items-center gap-3 md:flex">
+          {user && (
+            <div className="flex items-center gap-2 rounded-full bg-green-50 px-3 py-1.5 border border-green-100">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-700 text-white">
+                <User className="h-3.5 w-3.5" />
+              </div>
+              <span className="text-sm font-medium text-green-800 max-w-[120px] truncate">
+                {user.name}
+              </span>
+            </div>
+          )}
+          {user ? (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 gap-1.5"
+              )}
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </button>
+          ) : (
+            <Link
+              href="/pricing"
+              className={buttonVariants({
+                className: "bg-amber-600 text-white hover:bg-amber-700",
+              })}
+            >
+              View Plans
+            </Link>
+          )}
         </div>
 
         <button
@@ -84,18 +128,45 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/pricing"
-              onClick={() => setOpen(false)}
-              className={buttonVariants({
-                className: "mt-2 bg-amber-600 text-white hover:bg-amber-700",
-              })}
-            >
-              View Plans
-            </Link>
+
+            {user && (
+              <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2 mt-2 border border-green-100">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-700 text-white">
+                  <User className="h-3.5 w-3.5" />
+                </div>
+                <span className="text-sm font-medium text-green-800">
+                  {user.name}
+                </span>
+              </div>
+            )}
+
+            {user ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  handleLogout();
+                }}
+                className="mt-2 flex items-center justify-center gap-1.5 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            ) : (
+              <Link
+                href="/pricing"
+                onClick={() => setOpen(false)}
+                className={buttonVariants({
+                  className: "mt-2 bg-amber-600 text-white hover:bg-amber-700",
+                })}
+              >
+                View Plans
+              </Link>
+            )}
           </nav>
         </div>
       )}
     </header>
   );
 }
+

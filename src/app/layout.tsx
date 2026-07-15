@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { AppEntryFlow } from "@/components/AppEntryFlow";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,10 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-[#f8faf6] font-sans">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AppEntryFlow>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AppEntryFlow>
       </body>
     </html>
   );
 }
+
