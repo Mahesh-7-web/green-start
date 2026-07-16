@@ -15,6 +15,9 @@ export type CatalogItem = {
   category: ItemCategory;
   description: string;
   benefits: string[];
+  nutritionalBenefits: string;
+  price: number; // price per 250g in INR
+  imageSlug: string; // used to look up image
   minPlan: PlanId;
   quantities: Record<PlanId, string | null>;
   featured?: boolean;
@@ -30,50 +33,154 @@ export const categoryLabels: Record<ItemCategory, string> = {
   snacks: "Energy Snacks",
 };
 
-export const catalogItems: CatalogItem[] = [
+export const sproutsProducts: CatalogItem[] = [
   {
-    id: "mixed-sprouts",
-    name: "Mixed Sprouts",
+    id: "green-gram-sprouts",
+    name: "Green Gram Sprouts",
     category: "sprouts",
     description:
-      "A fresh blend of moong and chana sprouts — high in protein and fiber for a light, energizing start.",
-    benefits: ["protein", "fiber", "gym"],
+      "Classic moong sprouts — light, easy to digest, and bursting with plant protein and vitamins.",
+    benefits: ["protein", "fiber", "vitamins"],
+    nutritionalBenefits:
+      "High in Vitamin C, folate, and plant protein. Supports digestion and immunity.",
+    price: 45,
+    imageSlug: "green-gram",
     minPlan: "basic",
     featured: true,
-    quantities: {
-      basic: "150g/day",
-      pro: "250g/day",
-      max: "400g/day",
-    },
+    quantities: { basic: "150g/day", pro: "250g/day", max: "400g/day" },
   },
   {
-    id: "moong-sprouts",
-    name: "Moong Sprouts",
+    id: "black-chickpea-sprouts",
+    name: "Black Chickpea Sprouts",
     category: "sprouts",
     description:
-      "Classic green moong sprouts, easy to digest and rich in vitamins and minerals.",
-    benefits: ["protein", "fiber", "diabetic-friendly"],
-    minPlan: "pro",
-    quantities: {
-      basic: null,
-      pro: "200g/day",
-      max: "300g/day",
-    },
+      "Nutty and hearty kala chana sprouts — rich in iron and plant protein for sustained energy.",
+    benefits: ["iron", "protein", "energy"],
+    nutritionalBenefits:
+      "Excellent source of iron, magnesium, and complex carbohydrates. Great for anaemia prevention.",
+    price: 55,
+    imageSlug: "black-chickpea",
+    minPlan: "basic",
+    featured: true,
+    quantities: { basic: "100g/day", pro: "200g/day", max: "300g/day" },
   },
   {
-    id: "chana-sprouts",
-    name: "Chana Sprouts",
+    id: "white-chickpea-sprouts",
+    name: "White Chickpea Sprouts",
     category: "sprouts",
     description:
-      "Hearty chana sprouts packed with plant protein — ideal for sustained morning energy.",
+      "Mild, creamy white chana sprouts packed with protein and fiber to keep you full and energized.",
     benefits: ["protein", "fiber", "gym"],
-    minPlan: "pro",
-    quantities: {
-      basic: null,
-      pro: "150g/day",
-      max: "250g/day",
-    },
+    nutritionalBenefits:
+      "Rich in plant protein, zinc, and B-vitamins. Ideal for muscle building and energy.",
+    price: 55,
+    imageSlug: "white-chickpea",
+    minPlan: "basic",
+    quantities: { basic: "100g/day", pro: "200g/day", max: "300g/day" },
   },
+  {
+    id: "black-gram-sprouts",
+    name: "Black Gram Sprouts",
+    category: "sprouts",
+    description:
+      "Urad dal sprouts with a bold, earthy flavour — exceptional protein source for gym enthusiasts.",
+    benefits: ["protein", "calcium", "gym"],
+    nutritionalBenefits:
+      "High in protein, calcium, and phosphorus. Supports bone health and muscle recovery.",
+    price: 50,
+    imageSlug: "black-gram",
+    minPlan: "pro",
+    quantities: { basic: null, pro: "150g/day", max: "250g/day" },
+  },
+  {
+    id: "cowpea-sprouts",
+    name: "Cowpea Sprouts",
+    category: "sprouts",
+    description:
+      "Lobia sprouts with a gentle flavour — diabetic-friendly, high-fiber, and nutrient-dense.",
+    benefits: ["fiber", "diabetic-friendly", "protein"],
+    nutritionalBenefits:
+      "Low glycaemic index, rich in folate and potassium. Excellent for blood sugar management.",
+    price: 48,
+    imageSlug: "cowpea",
+    minPlan: "basic",
+    quantities: { basic: "100g/day", pro: "200g/day", max: "300g/day" },
+  },
+  {
+    id: "finger-millet-sprouts",
+    name: "Finger Millet Sprouts",
+    category: "sprouts",
+    description:
+      "Ragi sprouts — a calcium powerhouse with earthy goodness ideal for bone strength.",
+    benefits: ["calcium", "fiber", "bone-health"],
+    nutritionalBenefits:
+      "Exceptionally high in calcium and amino acids. Supports bone density and natural energy.",
+    price: 52,
+    imageSlug: "finger-millet",
+    minPlan: "pro",
+    quantities: { basic: null, pro: "100g/day", max: "200g/day" },
+  },
+  {
+    id: "wheat-sprouts",
+    name: "Wheat Sprouts",
+    category: "sprouts",
+    description:
+      "Germinated wheat sprouts with a sweet, grassy taste — rich in enzymes and antioxidants.",
+    benefits: ["antioxidants", "fiber", "enzymes"],
+    nutritionalBenefits:
+      "Rich in Vitamin E, B-complex, and digestive enzymes. Detoxifying and energising.",
+    price: 40,
+    imageSlug: "wheat",
+    minPlan: "basic",
+    quantities: { basic: "100g/day", pro: "200g/day", max: "300g/day" },
+  },
+  {
+    id: "peanut-sprouts",
+    name: "Peanut Sprouts",
+    category: "sprouts",
+    description:
+      "Sprouted groundnuts with elevated protein and resveratrol — a gym-lover's superfood.",
+    benefits: ["protein", "healthy-fats", "gym"],
+    nutritionalBenefits:
+      "High in resveratrol, protein, and healthy fats. Boosts endurance and heart health.",
+    price: 60,
+    imageSlug: "peanut",
+    minPlan: "pro",
+    featured: true,
+    quantities: { basic: null, pro: "100g/day", max: "150g/day" },
+  },
+  {
+    id: "horse-gram-sprouts",
+    name: "Horse Gram Sprouts",
+    category: "sprouts",
+    description:
+      "Kulith sprouts — a traditional superfood known for weight management and metabolism boost.",
+    benefits: ["weight-loss", "metabolism", "protein"],
+    nutritionalBenefits:
+      "Rich in polyphenols and protein. Supports weight management and kidney health.",
+    price: 58,
+    imageSlug: "horse-gram",
+    minPlan: "pro",
+    quantities: { basic: null, pro: "100g/day", max: "200g/day" },
+  },
+  {
+    id: "mustard-sprouts",
+    name: "Mustard Sprouts",
+    category: "sprouts",
+    description:
+      "Spicy, peppery mustard sprouts rich in glucosinolates — powerful anti-inflammatory properties.",
+    benefits: ["anti-inflammatory", "antioxidants", "detox"],
+    nutritionalBenefits:
+      "Contains glucosinolates and Vitamin K. Anti-inflammatory and cancer-protective compounds.",
+    price: 65,
+    imageSlug: "mustard",
+    minPlan: "max",
+    quantities: { basic: null, pro: null, max: "80g/day" },
+  },
+];
+
+export const catalogItems: CatalogItem[] = [
+  ...sproutsProducts,
   {
     id: "roasted-groundnuts",
     name: "Roasted Groundnuts",
@@ -81,27 +188,13 @@ export const catalogItems: CatalogItem[] = [
     description:
       "Lightly roasted groundnuts for healthy fats and sustained energy without heaviness.",
     benefits: ["protein", "healthy-fats", "gym"],
+    nutritionalBenefits:
+      "Rich in niacin, magnesium, and healthy monounsaturated fats. Supports heart health.",
+    price: 70,
+    imageSlug: "groundnuts",
     minPlan: "basic",
     featured: true,
-    quantities: {
-      basic: "50g/day",
-      pro: "100g/day",
-      max: "150g/day",
-    },
-  },
-  {
-    id: "soaked-groundnuts",
-    name: "Soaked Groundnuts",
-    category: "groundnuts",
-    description:
-      "Overnight-soaked groundnuts that are gentler on digestion and nutrient-rich.",
-    benefits: ["protein", "fiber", "diabetic-friendly"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "100g/day",
-    },
+    quantities: { basic: "50g/day", pro: "100g/day", max: "150g/day" },
   },
   {
     id: "soaked-almonds",
@@ -109,97 +202,13 @@ export const catalogItems: CatalogItem[] = [
     category: "nuts",
     description:
       "Premium soaked almonds for brain health, skin glow, and morning vitality.",
-    benefits: ["protein", "healthy-fats", "gym"],
+    benefits: ["protein", "healthy-fats", "brain-health"],
+    nutritionalBenefits:
+      "High in Vitamin E, magnesium, and healthy fats. Boosts brain function and skin health.",
+    price: 120,
+    imageSlug: "almonds",
     minPlan: "pro",
-    quantities: {
-      basic: null,
-      pro: "30g/day",
-      max: "50g/day",
-    },
-  },
-  {
-    id: "walnuts",
-    name: "Walnuts",
-    category: "nuts",
-    description:
-      "Omega-3 rich walnuts to support heart health and cognitive function.",
-    benefits: ["healthy-fats", "brain-health"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "30g/day",
-    },
-  },
-  {
-    id: "flax-chia-mix",
-    name: "Flax & Chia Seeds Mix",
-    category: "nuts",
-    description:
-      "A fiber-rich seed blend that supports digestion and keeps you full longer.",
-    benefits: ["fiber", "omega-3", "diabetic-friendly"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "20g/day",
-    },
-  },
-  {
-    id: "makhana",
-    name: "Makhana (Fox Nuts)",
-    category: "superfoods",
-    description:
-      "Light, crunchy makhana — low-calorie superfood perfect for weight-conscious eaters.",
-    benefits: ["low-calorie", "protein", "gym"],
-    minPlan: "pro",
-    quantities: {
-      basic: null,
-      pro: "50g/day",
-      max: "80g/day",
-    },
-  },
-  {
-    id: "dry-fruits-mix",
-    name: "Dry Fruits Mix",
-    category: "superfoods",
-    description:
-      "Dates, raisins, and apricots — natural sweetness with iron and antioxidants.",
-    benefits: ["iron", "energy", "fiber"],
-    minPlan: "pro",
-    quantities: {
-      basic: null,
-      pro: "40g/day",
-      max: "70g/day",
-    },
-  },
-  {
-    id: "ragi-malt",
-    name: "Ragi Malt Mix",
-    category: "grains",
-    description:
-      "Calcium-rich ragi malt — a warm, nourishing drink to power your morning.",
-    benefits: ["calcium", "fiber", "diabetic-friendly"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "1 serving/day",
-    },
-  },
-  {
-    id: "oats-porridge",
-    name: "Oats Porridge Mix",
-    category: "grains",
-    description:
-      "Ready-to-cook oats blend with nuts — slow-release carbs for gym-goers.",
-    benefits: ["fiber", "gym", "energy"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "1 serving/day",
-    },
+    quantities: { basic: null, pro: "30g/day", max: "50g/day" },
   },
   {
     id: "seasonal-fruits",
@@ -208,68 +217,26 @@ export const catalogItems: CatalogItem[] = [
     description:
       "Fresh seasonal fruits handpicked for vitamins, hydration, and natural energy.",
     benefits: ["vitamins", "hydration", "fiber"],
+    nutritionalBenefits:
+      "Natural source of Vitamin C, antioxidants and dietary fiber. Hydrating and energising.",
+    price: 80,
+    imageSlug: "fruits",
     minPlan: "basic",
     featured: true,
-    quantities: {
-      basic: "1 pc/day",
-      pro: "2 pcs/day",
-      max: "3 pcs/day",
-    },
+    quantities: { basic: "1 pc/day", pro: "2 pcs/day", max: "3 pcs/day" },
   },
   {
-    id: "boiled-eggs",
-    name: "Boiled Eggs",
-    category: "fresh",
+    id: "ragi-malt",
+    name: "Ragi Malt Mix",
+    category: "grains",
     description:
-      "Farm-fresh boiled eggs — the ultimate gym protein add-on for muscle recovery.",
-    benefits: ["protein", "gym", "muscle-recovery"],
+      "Calcium-rich ragi malt — a warm, nourishing drink to power your morning.",
+    benefits: ["calcium", "fiber", "diabetic-friendly"],
+    nutritionalBenefits:
+      "Exceptional calcium and amino acid content. Supports bone health and sustained energy.",
+    price: 90,
+    imageSlug: "ragi",
     minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "2/day",
-    },
-  },
-  {
-    id: "fresh-curd",
-    name: "Fresh Curd Cup",
-    category: "fresh",
-    description:
-      "Probiotic-rich fresh curd to support gut health and complement your morning meal.",
-    benefits: ["probiotics", "protein", "gut-health"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "200ml/day",
-    },
-  },
-  {
-    id: "coconut-laddoo",
-    name: "Coconut-Jaggery Laddoo",
-    category: "snacks",
-    description:
-      "Natural energy bites made with coconut and jaggery — no refined sugar.",
-    benefits: ["energy", "natural-sweetener", "fiber"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "2 pcs/day",
-    },
-  },
-  {
-    id: "green-smoothie-pack",
-    name: "Green Smoothie Pack",
-    category: "snacks",
-    description:
-      "Pre-portioned spinach, cucumber, and herb blend for a quick detox smoothie.",
-    benefits: ["detox", "vitamins", "gym"],
-    minPlan: "max",
-    quantities: {
-      basic: null,
-      pro: null,
-      max: "1 pack/day",
-    },
+    quantities: { basic: null, pro: null, max: "1 serving/day" },
   },
 ];

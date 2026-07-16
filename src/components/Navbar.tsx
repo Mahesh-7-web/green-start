@@ -2,17 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Leaf, Menu, X, LogOut, User } from "lucide-react";
+import { Leaf, Menu, X, LogOut, User, Sprout } from "lucide-react";
 import { useState, useEffect } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/compare", label: "Compare" },
-];
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { RequestSproutsModal } from "@/components/RequestSproutsModal";
+import { useLanguage } from "@/components/LanguageContext";
 
 function getLoggedInUser(): { name: string; email: string } | null {
   if (typeof window === "undefined") return null;
@@ -28,6 +24,15 @@ export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { href: "/", label: t.home },
+    { href: "/products", label: t.products },
+    { href: "/pricing", label: t.pricing },
+    { href: "/compare", label: t.compare },
+    { href: "/help", label: t.helpCentre },
+  ];
 
   useEffect(() => {
     setUser(getLoggedInUser());
@@ -65,7 +70,21 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
+          <LanguageSwitcher />
+
+          <RequestSproutsModal
+            trigger={
+              <button
+                type="button"
+                className="flex items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 px-3 py-1.5 text-xs font-medium text-teal-800 hover:bg-teal-100 transition-colors"
+              >
+                <Sprout className="h-3.5 w-3.5 text-teal-600" />
+                {t.requestSprouts}
+              </button>
+            }
+          />
+
           {user && (
             <div className="flex items-center gap-2 rounded-full bg-green-50 px-3 py-1.5 border border-green-100">
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-700 text-white">
@@ -82,17 +101,17 @@ export function Navbar() {
               onClick={handleLogout}
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 gap-1.5"
+                "border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 gap-1.5 h-8 px-3 text-xs"
               )}
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-3.5 w-3.5" />
               Logout
             </button>
           ) : (
             <Link
               href="/pricing"
               className={buttonVariants({
-                className: "bg-amber-600 text-white hover:bg-amber-700",
+                className: "bg-amber-600 text-white hover:bg-amber-700 h-8 px-3 text-xs",
               })}
             >
               View Plans
@@ -128,6 +147,21 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            <div className="mt-2 flex items-center gap-2">
+              <LanguageSwitcher />
+              <RequestSproutsModal
+                trigger={
+                  <button
+                    type="button"
+                    className="flex items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 px-3 py-1.5 text-xs font-medium text-teal-800 hover:bg-teal-100 transition-colors"
+                  >
+                    <Sprout className="h-3.5 w-3.5 text-teal-600" />
+                    {t.requestSprouts}
+                  </button>
+                }
+              />
+            </div>
 
             {user && (
               <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2 mt-2 border border-green-100">
@@ -169,4 +203,3 @@ export function Navbar() {
     </header>
   );
 }
-
