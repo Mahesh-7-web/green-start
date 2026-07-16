@@ -6,6 +6,11 @@ import { ShoppingCart, Minus, Plus, Leaf, Info } from "lucide-react";
 import type { CatalogItem } from "@/data/catalog";
 import { useLanguage } from "@/components/LanguageContext";
 
+// With unoptimized:true, Next.js does NOT prepend basePath automatically.
+// We must do it manually for GitHub Pages static export.
+const BASE_PATH =
+  process.env.NODE_ENV === "production" ? "/green-start" : "";
+
 type ProductCardProps = {
   item: CatalogItem;
   onAddToCart?: (item: CatalogItem, qty: number) => void;
@@ -47,7 +52,7 @@ export function ProductCard({ item, onAddToCart }: ProductCardProps) {
       {/* Image area */}
       <div className={`relative h-48 bg-gradient-to-br ${gradient} overflow-hidden`}>
         <Image
-          src={`/sprouts/${item.imageSlug}.png`}
+          src={`${BASE_PATH}/sprouts/${item.imageSlug}.png`}
           alt={item.name}
           fill
           className="object-cover mix-blend-overlay opacity-80 group-hover:scale-105 transition-transform duration-500"
