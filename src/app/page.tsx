@@ -80,10 +80,6 @@ export default function HomePage() {
         {/* Animated ocean shimmer */}
         <div
           className="absolute inset-0 animate-oceanShimmer opacity-20"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent, rgba(20,184,166,0.15), transparent)",
-          }}
         />
 
         {/* Decorative sand/wave texture */}

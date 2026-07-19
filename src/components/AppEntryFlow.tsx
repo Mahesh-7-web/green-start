@@ -42,20 +42,21 @@ function saveAccount(email: string, name: string, password: string) {
 type Phase = "splash" | "auth" | "main";
 
 /* ───────── Floating Leaf Particle ───────── */
-function FloatingLeaves() {
-  const leaves = Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    delay: `${Math.random() * 4}s`,
-    duration: `${3 + Math.random() * 4}s`,
-    size: 14 + Math.random() * 18,
-    opacity: 0.15 + Math.random() * 0.25,
-  }));
+// Computed once at module level — never recalculated on re-render
+const LEAF_DATA = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  left: `${(i * 10.3 + 5) % 100}%`,
+  top: `${(i * 13.7 + 8) % 100}%`,
+  delay: `${(i * 0.4) % 4}s`,
+  duration: `${4 + (i % 4)}s`,
+  size: 14 + (i % 3) * 6,
+  opacity: 0.15 + (i % 3) * 0.08,
+}));
 
+function FloatingLeaves() {
   return (
     <>
-      {leaves.map((l) => (
+      {LEAF_DATA.map((l) => (
         <Leaf
           key={l.id}
           className="absolute text-green-300 pointer-events-none"
@@ -66,6 +67,7 @@ function FloatingLeaves() {
             height: l.size,
             opacity: l.opacity,
             animation: `float ${l.duration} ease-in-out ${l.delay} infinite`,
+            willChange: "transform",
           }}
         />
       ))}
